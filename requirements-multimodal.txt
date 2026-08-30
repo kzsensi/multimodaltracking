@@ -1,0 +1,11 @@
+# Optional dependencies for pretrained audio/text emotion models and microphone input.
+# Install after dataset/model download decisions are approved:
+#   venv_gpu\Scripts\python.exe -m pip install -r requirements-multimodal.txt
+
+--extra-index-url https://download.pytorch.org/whl/cu128
+transformers==4.56.2
+accelerate==1.10.1
+torchaudio==2.11.0+cu128
+soundfile==0.13.1
+librosa==0.11.0
+sounddevice==0.5.2

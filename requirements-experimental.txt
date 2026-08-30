@@ -1,0 +1,4 @@
+-r requirements-torch.txt
+transformers==4.56.2
+safetensors==0.6.2
+huggingface-hub==0.34.4

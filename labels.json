@@ -1,0 +1,24 @@
+{
+  "labels": [
+    "angry",
+    "disgust",
+    "fear",
+    "happy",
+    "neutral",
+    "sad",
+    "surprise"
+  ],
+  "class_indices": {
+    "angry": 0,
+    "disgust": 1,
+    "fear": 2,
+    "happy": 3,
+    "neutral": 4,
+    "sad": 5,
+    "surprise": 6
+  },
+  "image_size": 48,
+  "color_mode": "rgb",
+  "architecture": "simple_cnn",
+  "preprocessing": "rescale_1_over_255"
+}

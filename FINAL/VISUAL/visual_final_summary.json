@@ -1,0 +1,25 @@
+{
+  "best_realtime": {
+    "model": "models/torch/efficientnet_b1_yolo1k_plus_mutfer_weakboost_continue_v2.pt",
+    "reports": "reports/final_visual_fer_efficientnet_b1_85_86",
+    "accuracy": 0.8521916411824668,
+    "macro_f1": 0.8485717381424912
+  },
+  "best_offline_tta": {
+    "model": "models/torch/efficientnet_b1_yolo1k_plus_mutfer_weakboost_continue_v2.pt",
+    "accuracy": 0.8664627930682977,
+    "macro_f1": 0.8630446790876843
+  },
+  "weak_classes_realtime": {
+    "sad": 0.8181818181818182,
+    "fear": 0.8336755646817249,
+    "angry": 0.8308823529411765,
+    "neutral": 0.8263665594855305
+  },
+  "weak_classes_tta": {
+    "sad": 0.8263254113345521,
+    "fear": 0.847870182555781,
+    "angry": 0.8550185873605948,
+    "neutral": 0.8471337579617835
+  }
+}
