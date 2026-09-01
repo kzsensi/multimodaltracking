@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import tempfile
 import time
 from pathlib import Path
 
@@ -138,17 +137,30 @@ def build_interface(runtime):
 
     with gr.Blocks(title="Multimodal Emotion Recognition") as demo:
         gr.Markdown("# Multimodal Emotion Recognition")
-        gr.Markdown("Visual model: EfficientNet-B1, 85.22% real-time test accuracy on the local MUTFER2024 test split.")
+        gr.Markdown(
+            "Visual model: EfficientNet-B1, 85.22% real-time test accuracy on the local MUTFER2024 test split. "
+            "Use the webcam input for live visual predictions, or upload an image/audio file for a one-shot demo."
+        )
         with gr.Row():
             with gr.Column(scale=1):
-                image = gr.Image(label="Webcam or Image", sources=["webcam", "upload"], type="numpy")
+                with gr.Tabs():
+                    with gr.Tab("Live Webcam"):
+                        webcam = gr.Image(
+                            label="Live Webcam",
+                            sources=["webcam"],
+                            type="numpy",
+                            streaming=True,
+                            mirror_webcam=True,
+                        )
+                    with gr.Tab("Upload Image"):
+                        upload_image = gr.Image(label="Upload Image", sources=["upload"], type="numpy")
                 audio = gr.Audio(label="Optional WAV Audio", sources=["microphone", "upload"], type="filepath")
                 text = gr.Textbox(label="Optional Text", lines=3, placeholder="Type a sentence here...")
                 with gr.Accordion("Fusion Weights", open=False):
                     visual_weight = gr.Slider(0.0, 1.0, value=0.5, step=0.05, label="Visual")
                     audio_weight = gr.Slider(0.0, 1.0, value=0.3, step=0.05, label="Audio")
                     text_weight = gr.Slider(0.0, 1.0, value=0.2, step=0.05, label="Text")
-                button = gr.Button("Analyze Emotion", variant="primary")
+                button = gr.Button("Analyze Uploaded Image / Inputs", variant="primary")
             with gr.Column(scale=1):
                 annotated = gr.Image(label="Visual Result", type="numpy")
                 summary = gr.Textbox(label="Result Summary", lines=5)
@@ -160,8 +172,17 @@ def build_interface(runtime):
             text_probs = gr.Label(label="Text Probabilities", num_top_classes=7)
         button.click(
             run,
-            inputs=[image, audio, text, visual_weight, audio_weight, text_weight],
+            inputs=[upload_image, audio, text, visual_weight, audio_weight, text_weight],
             outputs=[annotated, summary, fusion, visual, audio_probs, text_probs],
+        )
+        webcam.stream(
+            run,
+            inputs=[webcam, audio, text, visual_weight, audio_weight, text_weight],
+            outputs=[annotated, summary, fusion, visual, audio_probs, text_probs],
+            stream_every=0.75,
+            trigger_mode="always_last",
+            concurrency_limit=1,
+            show_progress="hidden",
         )
     return demo
 
