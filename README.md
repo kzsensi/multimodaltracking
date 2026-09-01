@@ -335,6 +335,29 @@ Evaluate the current no-download audio fallback:
 venv_gpu\Scripts\python.exe evaluate_audio_emotion_model.py --dataset dataset_ravdess_audio\test --backend acoustic --reports reports\audio_ravdess_acoustic_latest
 ```
 
+## Step 7C: Browser Demo and Cloudflare Link
+
+Run the local Gradio browser demo:
+
+```
+venv_gpu\Scripts\python.exe web_multimodal_demo.py --host 127.0.0.1 --port 7860 --visual-device cuda
+```
+
+Open locally:
+
+```
+http://127.0.0.1:7860
+```
+
+Create a temporary public Cloudflare link:
+
+```
+cloudflared tunnel --url http://127.0.0.1:7860
+```
+
+Keep both commands running while sharing the public link. The temporary
+Cloudflare URL stops working when the local server or tunnel is closed.
+
 ## Step 8: Evaluate the Pretrained HSEmotion Model
 
 Fair full-image evaluation:
